@@ -7,7 +7,7 @@
       Title="MainPage">
 
     <Grid Background="White">
-        <ListView ItemsSource="{Binding Currencies}" Margin="20">
+        <ListView ItemsSource="{Binding Currencies}">
             <ListView.ItemTemplate>
                 <DataTemplate>
                     <StackPanel Margin="10">

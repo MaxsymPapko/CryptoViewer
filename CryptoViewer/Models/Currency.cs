@@ -12,10 +12,15 @@ namespace CryptoViewer.Models
         public string Id { get; set; }
         public string Symbol { get; set; }
         public string Name { get; set; }
-        //public string Image { get; set; } //in case of error, pull down
-        public double CurrentPrice { get; set; }
-        //public double MarketCap { get; set; }
-        //public double PriceChangePercentageFor24H { get; set; }
+
+        public decimal CurrentPrice { get; set; }
+
+        public decimal MarketCap { get; set; }
+        public decimal TotalVolume { get; set; }
+
+        public decimal PriceChangePercentage24h { get; set; }
+
+        public string Image { get; set; }
 
 
 
