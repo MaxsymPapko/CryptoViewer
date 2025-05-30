@@ -18,3 +18,9 @@ B:\CryptoViewer\CryptoViewer\CryptoViewer\obj\Debug\net8.0-windows\refint\Crypto
 B:\CryptoViewer\CryptoViewer\CryptoViewer\obj\Debug\net8.0-windows\CryptoViewer.pdb
 B:\CryptoViewer\CryptoViewer\CryptoViewer\obj\Debug\net8.0-windows\CryptoViewer.genruntimeconfig.cache
 B:\CryptoViewer\CryptoViewer\CryptoViewer\obj\Debug\net8.0-windows\ref\CryptoViewer.dll
+B:\CryptoViewer\CryptoViewer\CryptoViewer\obj\Debug\net8.0-windows\View\CurrencyDetailsPage.g.cs
+B:\CryptoViewer\CryptoViewer\CryptoViewer\obj\Debug\net8.0-windows\View\MainPage.g.cs
+B:\CryptoViewer\CryptoViewer\CryptoViewer\obj\Debug\net8.0-windows\GeneratedInternalTypeHelper.g.cs
+B:\CryptoViewer\CryptoViewer\CryptoViewer\obj\Debug\net8.0-windows\View\MainPage.baml
+B:\CryptoViewer\CryptoViewer\CryptoViewer\obj\Debug\net8.0-windows\View\CurrencyDetailsPage.baml
+B:\CryptoViewer\CryptoViewer\CryptoViewer\obj\Debug\net8.0-windows\CryptoViewer.sourcelink.json

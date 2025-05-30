@@ -1,12 +1,34 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
+﻿using System.Collections.ObjectModel;
+using System.ComponentModel;
 using System.Threading.Tasks;
+using CryptoViewer.Models;
+using CryptoViewer.Services;
 
 namespace CryptoViewer.ViewModel
 {
-    class MainViewModel
+    public class MainViewModel : INotifyPropertyChanged
     {
+        public event PropertyChangedEventHandler PropertyChanged;
+
+        private ObservableCollection<Currency> _currencies;
+        public ObservableCollection<Currency> Currencies
+        {
+            get => _currencies;
+            set { _currencies = value; OnPropertyChanged(nameof(Currencies)); }
+        }
+
+        public MainViewModel()
+        {
+            LoadCurrencies();
+        }
+
+        private async void LoadCurrencies()
+        {
+            var list = await CoinGeckoService.GetTopCurrenciesAsync();
+            Currencies = new ObservableCollection<Currency>(list);
+        }
+
+        protected void OnPropertyChanged(string name) =>
+            PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(name));
     }
 }
