@@ -6,9 +6,10 @@ using System.Threading.Tasks;
 using CryptoViewer.Models;
 using System.Windows;
 
+
 namespace CryptoViewer.Services
 {
-    public class CoinGeckoService
+    public class CoinGeckoService:ICryptoService
     {
         private readonly HttpClient _httpClient;
 
@@ -34,7 +35,7 @@ namespace CryptoViewer.Services
 
                 if (!response.IsSuccessStatusCode)
                 {
-                    MessageBox.Show($"⚠ API помилка: {response.StatusCode}");
+                    MessageBox.Show($"API помилка: {response.StatusCode}");
                     return currencies;
                 }
 
@@ -47,13 +48,13 @@ namespace CryptoViewer.Services
 
                 if (currencies == null)
                 {
-                    MessageBox.Show("⚠ Не вдалося десеріалізувати JSON.");
+                    MessageBox.Show(" Не вдалося десеріалізувати JSON.");
                     return new List<Currency>();
                 }
             }
             catch (Exception ex)
             {
-                MessageBox.Show("❌ Виняток при запиті: " + ex.Message);
+                MessageBox.Show(" Виняток при запиті: " + ex.Message);
             }
 
             return currencies;

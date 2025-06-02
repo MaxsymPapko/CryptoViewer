@@ -1,50 +1,95 @@
-﻿using System.Collections.ObjectModel;
+﻿using CryptoViewer.Models;
+using CryptoViewer.Services;
+using System.Collections.ObjectModel;
 using System.ComponentModel;
 using System.Runtime.CompilerServices;
-using System.Threading.Tasks;
-using CryptoViewer.Models;
-using CryptoViewer.Services;
 using System.Windows;
 
-namespace CryptoViewer.ViewModel
+public class MainViewModel : INotifyPropertyChanged
 {
-    public class MainViewModel : INotifyPropertyChanged
+    private readonly ICryptoService _cryptoService;
+
+    public ObservableCollection<Currency> Currencies { get; set; } = new ObservableCollection<Currency>();
+    public ObservableCollection<Currency> FilteredCurrencies { get; set; } = new ObservableCollection<Currency>();
+
+    private Currency _selectedCurrency;
+    public Currency SelectedCurrency
     {
-        private ObservableCollection<Currency> _currencies;
-        public ObservableCollection<Currency> Currencies
+        get => _selectedCurrency;
+        set
         {
-            get => _currencies;
-            set
+            _selectedCurrency = value;
+            OnPropertyChanged();
+        }
+    }
+
+    private string _searchQuery;
+    public string SearchQuery
+    {
+        get => _searchQuery;
+        set
+        {
+            if (_searchQuery != value)
             {
-                _currencies = value;
+                _searchQuery = value;
                 OnPropertyChanged();
+                FilterCurrencies();
             }
         }
+    }
 
-        public MainViewModel()
+    public MainViewModel()
+    {
+        _cryptoService = new CoinGeckoService();
+        LoadCurrenciesAsync();
+    }
+
+    private async void LoadCurrenciesAsync()
+    {
+        try
         {
-            LoadCurrencies();
-        }
+            var currencies = await _cryptoService.GetTopCurrenciesAsync(10);
 
-        private async void LoadCurrencies()
-        {
-            var service = new CoinGeckoService();
-            var result = await service.GetTopCurrenciesAsync(10);
+            Currencies.Clear();
+            FilteredCurrencies.Clear();
 
-            if (result == null || result.Count == 0)
+            foreach (var currency in currencies)
             {
-                MessageBox.Show("❌ CoinGecko API не повернув валют.");
-                return;
+                Currencies.Add(currency);
+                FilteredCurrencies.Add(currency);
             }
-
-            Currencies = new ObservableCollection<Currency>(result);
         }
-
-        public event PropertyChangedEventHandler PropertyChanged;
-
-        protected void OnPropertyChanged([CallerMemberName] string name = null)
+        catch (Exception ex)
         {
-            PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(name));
+            MessageBox.Show("Помилка завантаження валют: " + ex.Message);
         }
+    }
+
+    private void FilterCurrencies()
+    {
+        if (string.IsNullOrWhiteSpace(SearchQuery))
+        {
+            // Якщо пошук порожній — повертаємо повний список
+            FilteredCurrencies.Clear();
+            foreach (var currency in Currencies)
+                FilteredCurrencies.Add(currency);
+        }
+        else
+        {
+            var filtered = Currencies
+                .Where(c => c.Name.Contains(SearchQuery, StringComparison.OrdinalIgnoreCase) ||
+                            c.Symbol.Contains(SearchQuery, StringComparison.OrdinalIgnoreCase))
+                .ToList();
+
+            FilteredCurrencies.Clear();
+            foreach (var c in filtered)
+                FilteredCurrencies.Add(c);
+        }
+    }
+
+    public event PropertyChangedEventHandler PropertyChanged;
+    protected void OnPropertyChanged([CallerMemberName] string name = null)
+    {
+        PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(name));
     }
 }

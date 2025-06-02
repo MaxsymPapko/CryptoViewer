@@ -6,8 +6,27 @@
       mc:Ignorable="d"
       Title="MainPage">
 
-    <Grid Background="White">
-        <ListView ItemsSource="{Binding Currencies}">
+    <Grid Background="White" Margin="10">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="*"/>
+        </Grid.RowDefinitions>
+
+        <!-- Пошук -->
+        <StackPanel Grid.Row="0" Margin="0,0,0,10">
+            
+            <TextBox Width="300"
+                     Height="30"
+                     Padding="4"
+                     Text="{Binding SearchQuery, UpdateSourceTrigger=PropertyChanged}"/>
+        </StackPanel>
+
+        <!-- Список валют -->
+        <ListView x:Name="CurrencyList"
+                  Grid.Row="1"
+                  ItemsSource="{Binding FilteredCurrencies}"
+                  SelectedItem="{Binding SelectedCurrency}"
+                  MouseDoubleClick="CurrencyList_MouseDoubleClick">
             <ListView.ItemTemplate>
                 <DataTemplate>
                     <StackPanel Margin="10">
