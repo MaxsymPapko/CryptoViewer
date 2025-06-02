@@ -5,6 +5,9 @@ using System.Text.Json;
 using System.Threading.Tasks;
 using CryptoViewer.Models;
 using System.Windows;
+using System.Diagnostics;
+using Newtonsoft.Json.Linq;
+
 
 
 namespace CryptoViewer.Services
@@ -60,5 +63,47 @@ namespace CryptoViewer.Services
             return currencies;
         }
 
+        public async Task<List<Market>> GetMarketsForCurrencyAsync(string id)
+        {
+            var response = await _httpClient.GetAsync($"https://api.coingecko.com/api/v3/coins/{id}");
+
+            if (!response.IsSuccessStatusCode)
+            {
+                return new List<Market>();
+            }
+
+            var json = await response.Content.ReadAsStringAsync();
+
+            using var document = JsonDocument.Parse(json);
+            var root = document.RootElement;
+
+            if (!root.TryGetProperty("tickers", out JsonElement tickersElement))
+            {
+                return new List<Market>();
+            }
+
+            var markets = new List<Market>();
+
+            foreach (var ticker in tickersElement.EnumerateArray())
+            {
+                var market = new Market
+                {
+                    Base = ticker.GetProperty("base").GetString(),
+                    Target = ticker.GetProperty("target").GetString(),
+                    Last = ticker.GetProperty("last").GetDecimal(),
+                    TradeUrl = ticker.TryGetProperty("trade_url", out var tradeUrlEl) ? tradeUrlEl.GetString() : null,
+                    MarketInfo = new MarketInfo
+                    {
+                        Name = ticker.GetProperty("market").GetProperty("name").GetString()
+                    }
+                };
+
+                markets.Add(market);
+            }
+
+            return markets;
+        }
+
     }
+
 }

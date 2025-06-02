@@ -5,6 +5,10 @@ using System.Text;
 using System.Threading.Tasks;
 using CryptoViewer.Models;
 using System.ComponentModel;
+using CryptoViewer.Services;
+using System.Collections.ObjectModel;
+using System.Windows;
+
 
 namespace CryptoViewer.ViewModel
 {
@@ -36,5 +40,19 @@ namespace CryptoViewer.ViewModel
         {
             PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(name));
         }
+        public ObservableCollection<Market> Markets { get; } = new();
+
+        public async Task LoadMarketsAsync(string currencyId)
+        {
+            var service = new CoinGeckoService();
+            var markets = await service.GetMarketsForCurrencyAsync(currencyId);
+            Application.Current.Dispatcher.Invoke(() =>
+            {
+                Markets.Clear();
+                foreach (var market in markets)
+                    Markets.Add(market);
+            });
+        }
+
     }
 }

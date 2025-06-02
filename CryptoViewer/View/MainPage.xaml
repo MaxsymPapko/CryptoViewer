@@ -6,36 +6,72 @@
       mc:Ignorable="d"
       Title="MainPage">
 
-    <Grid Background="White" Margin="10">
-        <Grid.RowDefinitions>
-            <RowDefinition Height="Auto"/>
-            <RowDefinition Height="*"/>
-        </Grid.RowDefinitions>
+    <ScrollViewer VerticalScrollBarVisibility="Auto">
+        <Grid Background="White" Margin="10">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="Auto"/>
+                <RowDefinition Height="Auto"/>
+                <RowDefinition Height="*"/>
+                <RowDefinition Height="Auto"/>
+                <RowDefinition Height="*"/>
+            </Grid.RowDefinitions>
 
-        <!-- Пошук -->
-        <StackPanel Grid.Row="0" Margin="0,0,0,10">
-            
-            <TextBox Width="300"
-                     Height="30"
-                     Padding="4"
-                     Text="{Binding SearchQuery, UpdateSourceTrigger=PropertyChanged}"/>
-        </StackPanel>
+            <!-- Пошук -->
+            <StackPanel Grid.Row="0" Margin="0,0,0,10">
+                <TextBox Width="300"
+                         Height="30"
+                         Padding="4"
+                         Text="{Binding SearchQuery, UpdateSourceTrigger=PropertyChanged}"
+                          />
+            </StackPanel>
 
-        <!-- Список валют -->
-        <ListView x:Name="CurrencyList"
-                  Grid.Row="1"
-                  ItemsSource="{Binding FilteredCurrencies}"
-                  SelectedItem="{Binding SelectedCurrency}"
-                  MouseDoubleClick="CurrencyList_MouseDoubleClick">
-            <ListView.ItemTemplate>
-                <DataTemplate>
-                    <StackPanel Margin="10">
-                        <TextBlock Text="{Binding Name}" FontSize="20" FontWeight="Bold"/>
-                        <TextBlock Text="{Binding Symbol}" FontSize="14" Foreground="Gray"/>
-                        <TextBlock Text="{Binding CurrentPrice, StringFormat='Price: {0:C}'}" FontSize="14"/>
-                    </StackPanel>
-                </DataTemplate>
-            </ListView.ItemTemplate>
-        </ListView>
-    </Grid>
+            <!-- Заголовок: Список валют -->
+            <TextBlock Grid.Row="1"
+                       Text="Список валют"
+                       FontSize="20"
+                       FontWeight="Bold"
+                       Margin="0,0,0,5"/>
+
+            <!-- Список валют -->
+            <ListView x:Name="CurrencyList"
+                      Grid.Row="2"
+                      ItemsSource="{Binding FilteredCurrencies}"
+                      SelectedItem="{Binding SelectedCurrency, Mode=TwoWay}"
+                      MouseDoubleClick="CurrencyList_MouseDoubleClick"
+                      Height="250">
+                <ListView.ItemTemplate>
+                    <DataTemplate>
+                        <StackPanel Margin="10">
+                            <TextBlock Text="{Binding Name}" FontSize="20" FontWeight="Bold"/>
+                            <TextBlock Text="{Binding Symbol}" FontSize="14" Foreground="Gray"/>
+                            <TextBlock Text="{Binding CurrentPrice, StringFormat='Price: {0:C}'}" FontSize="14"/>
+                        </StackPanel>
+                    </DataTemplate>
+                </ListView.ItemTemplate>
+            </ListView>
+
+            <!-- Заголовок: Торгові майданчики -->
+            <TextBlock Grid.Row="3"
+                       Text="Торгові майданчики"
+                       FontSize="20"
+                       FontWeight="Bold"
+                       Margin="0,10,0,5"/>
+
+            <!-- Список торгових майданчиків -->
+            <ListView Grid.Row="4"
+                      ItemsSource="{Binding Markets}"
+                      Height="250">
+                <ListView.ItemTemplate>
+                    <DataTemplate>
+                        <StackPanel Margin="10">
+                            <TextBlock Text="{Binding MarketInfo.Name}" FontSize="16" FontWeight="Bold"/>
+                            <TextBlock Text="{Binding Base}" FontSize="14" />
+                            <TextBlock Text="{Binding Last, StringFormat='Last price: {0}'}" FontSize="14" />
+                        </StackPanel>
+                    </DataTemplate>
+                </ListView.ItemTemplate>
+            </ListView>
+
+        </Grid>
+    </ScrollViewer>
 </Page>

@@ -1,8 +1,10 @@
 {
   "version": 2,
-  "dgSpecHash": "uRyIw0+7vp9uDCHSEZgHLz0eavfcqe6AuH9do6YzpozjInj/M76lA/4ucKt5gxtCcHdQWQpHTHQxFTJq9+5A+Q==",
+  "dgSpecHash": "6vdKuwo/7noRds+Dx/4wu8erLMHZWmhSQOvWWhuEqFDosn6yrJ1MeTIWyNjpuvd4h7nUG9ti9rwm2D5gBIPyxA==",
   "success": true,
   "projectFilePath": "B:\\CryptoViewer\\CryptoViewer\\CryptoViewer\\CryptoViewer.csproj",
-  "expectedPackageFiles": [],
+  "expectedPackageFiles": [
+    "C:\\Users\\user\\.nuget\\packages\\newtonsoft.json\\13.0.3\\newtonsoft.json.13.0.3.nupkg.sha512"
+  ],
   "logs": []
 }

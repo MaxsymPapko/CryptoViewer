@@ -22,6 +22,21 @@
             <TextBlock Text="{Binding SelectedCurrency.PriceChangePercentage24h, StringFormat='Change (24h): {0:F2}%'}"/>
 
             <Button Content="Back" Width="100" Click="Back_Click"/>
+            <TextBlock Text="Markets:" FontWeight="Bold" Margin="0,20,0,5" />
+            <ListView ItemsSource="{Binding Markets}" Height="200">
+                <ListView.ItemTemplate>
+                    <DataTemplate>
+                        <StackPanel Orientation="Horizontal" Margin="5">
+                            <TextBlock Text="{Binding MarketName}" Width="120" />
+                            <TextBlock Text="{Binding Base}" Width="60" />
+                            <TextBlock Text="{Binding Target}" Width="60" />
+                            <TextBlock Text="{Binding Last, StringFormat=C}" Width="100" />
+                            <Button Content="Go to market" CommandParameter="{Binding TradeUrl}" Click="OpenMarket_Click" />
+                        </StackPanel>
+                    </DataTemplate>
+                </ListView.ItemTemplate>
+            </ListView>
+
         </StackPanel>
     </Grid>
 </Page>

@@ -23,3 +23,6 @@ B:\CryptoViewer\CryptoViewer\CryptoViewer\obj\Debug\net8.0-windows\View\MainPage
 B:\CryptoViewer\CryptoViewer\CryptoViewer\obj\Debug\net8.0-windows\View\MainPage.baml
 B:\CryptoViewer\CryptoViewer\CryptoViewer\obj\Debug\net8.0-windows\View\CurrencyDetailsPage.baml
 B:\CryptoViewer\CryptoViewer\CryptoViewer\obj\Debug\net8.0-windows\CryptoViewer.sourcelink.json
+B:\CryptoViewer\CryptoViewer\CryptoViewer\bin\Debug\net8.0-windows\Newtonsoft.Json.dll
+B:\CryptoViewer\CryptoViewer\CryptoViewer\obj\Debug\net8.0-windows\CryptoViewer.csproj.AssemblyReference.cache
+B:\CryptoViewer\CryptoViewer\CryptoViewer\obj\Debug\net8.0-windows\CryptoVi.35EE809C.Up2Date
